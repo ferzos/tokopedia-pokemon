@@ -3571,6 +3571,11 @@ mimic-response@^3.1.0:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
   integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
 
+mini.css-react@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mini.css-react/-/mini.css-react-1.0.3.tgz#4c99193dad5f7363b12e7c0c85763681bef851b3"
+  integrity sha512-Mh/MvYxKHZLHXPPWoeH97Jtn86FpLdgh8IDfWkt3jJSgFwxaVRMLYHbvb5+C2S++mUIg7Avh+n0/lb45kArKYA==
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
