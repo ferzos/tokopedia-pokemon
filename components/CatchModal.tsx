@@ -99,7 +99,7 @@ const CatchModal = (props: Props) => {
       trigger={
         <div css={styles.extraInfo}>
           {'Catch!'}
-          <Image src={'https://lh3.googleusercontent.com/proxy/1TRDSQ1hld7KA_X2Lq3_N8lv9XFt-mTX0KNa_wBs17AS4FuzTg09eT7-9AdLN4ofz6D_0nCDUToz_eQ7pL03dlD4pEAkDNLii-d82zrpGVCtgcGe6uRWz9GNmo6MQVzrCQ'} alt={'pokeball'} width={24} height={24} />
+          <Image src={'/pokeball.png'} alt={'pokeball'} width={24} height={24} />
         </div>
       }
     >
