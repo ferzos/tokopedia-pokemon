@@ -65,7 +65,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["@emotion/react/types/css-prop"],
+    "downlevelIteration": true
   },
   "include": [
     "next-env.d.ts",
