@@ -101,13 +101,11 @@ const PokemonDetail = (props: Props) => {
 
   if (loading) return <Loader text={`Fetching Pokedex data from Prof. Oak's lab`} />
 
-  if (error || !data?.pokemon.name || !data.pokemon.sprites?.front_default) return <ErrorState />
+  if (error || !data?.pokemon.name) return <ErrorState />
 
-  if (data?.pokemon.name && data.pokemon.sprites?.front_default) {
+  if (data?.pokemon.name) {
     const {
-      sprites: {
-        front_default
-      },
+      sprites,
       name,
       types,
       moves
@@ -119,7 +117,7 @@ const PokemonDetail = (props: Props) => {
           <Grid.Row columns={1}>
             <Grid.Column>
               <Card fluid>
-                <Image layout='responsive' src={front_default} alt={pokemon} width={500} height={500} />
+                <Image layout='responsive' src={sprites?.front_default || '/pokeball.png'} alt={pokemon} width={500} height={500} />
                 <Card.Content>
                   <Card.Header>{toTitleCase(name)}</Card.Header>
                   {types &&
@@ -140,7 +138,7 @@ const PokemonDetail = (props: Props) => {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <CatchModal pokemon={{ image: front_default, name: toTitleCase(name) }} />
+                  <CatchModal pokemon={{ image: sprites?.front_default || '/pokeball.png', name: toTitleCase(name) }} />
                 </Card.Content>
               </Card>
             </Grid.Column>
