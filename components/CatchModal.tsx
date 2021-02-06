@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Input, InputOnChangeData, Label, Modal } from "semantic-ui-react";
 import Image from 'next/image'
 
-import { setMyPokemonList } from "../utils/storage";
+import { addToPokemonList } from "../utils/storage";
 
 type SuccessCatchModalProps = {
   pokemon: {
@@ -27,9 +27,9 @@ const SuccessCatchModal = (props: SuccessCatchModalProps) => {
 
   const handleSubmit = () => {
     if (input.trim() === '') {
-      setIsError('EMPTY') 
+      setIsError('EMPTY')
     } else {
-      const isSuccess = setMyPokemonList({ name, image, nick: input })
+      const isSuccess = addToPokemonList({ name, image, nick: input })
       if (isSuccess) {
         setIsError(undefined)
         setOpen(false)
@@ -87,17 +87,21 @@ const CatchModal = (props: Props) => {
 
   const handleOpenModal = () => setOpen(true)
 
+  const handleCloseModal = () => setOpen(false)
+
   const handleRetry = () => setIsLoading(true)
 
   return (
     <Modal
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={handleCloseModal}
+      onOpen={handleOpenModal}
       open={open}
-      trigger={<div css={styles.extraInfo} onClick={handleOpenModal}>
-        {'Catch!'}
-        <Image src={'https://lh3.googleusercontent.com/proxy/1TRDSQ1hld7KA_X2Lq3_N8lv9XFt-mTX0KNa_wBs17AS4FuzTg09eT7-9AdLN4ofz6D_0nCDUToz_eQ7pL03dlD4pEAkDNLii-d82zrpGVCtgcGe6uRWz9GNmo6MQVzrCQ'} alt={'pokeball'} width={24} height={24} />
-      </div>}
+      trigger={
+        <div css={styles.extraInfo}>
+          {'Catch!'}
+          <Image src={'https://lh3.googleusercontent.com/proxy/1TRDSQ1hld7KA_X2Lq3_N8lv9XFt-mTX0KNa_wBs17AS4FuzTg09eT7-9AdLN4ofz6D_0nCDUToz_eQ7pL03dlD4pEAkDNLii-d82zrpGVCtgcGe6uRWz9GNmo6MQVzrCQ'} alt={'pokeball'} width={24} height={24} />
+        </div>
+      }
     >
       {isCatched ? <SuccessCatchModal pokemon={pokemon} setOpen={setOpen} /> : (
         <>

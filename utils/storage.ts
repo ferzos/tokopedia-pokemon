@@ -14,7 +14,7 @@ export const getMyPokemonList = (): MyPokemon[] | null => {
   return null
 }
 
-export const setMyPokemonList = (pokemon: MyPokemon): boolean => {
+export const addToPokemonList = (pokemon: MyPokemon): boolean => {
   const myPokemonList = getMyPokemonList()
 
   if (myPokemonList) {
@@ -30,4 +30,17 @@ export const setMyPokemonList = (pokemon: MyPokemon): boolean => {
   localStorage.setItem(MY_POKEMON, JSON.stringify([{ pokemon }]))
 
   return true
+}
+
+export const removeFromPokemonList = (pokemon: MyPokemon): MyPokemon[] => {
+  const myPokemonList = getMyPokemonList()
+
+  if (myPokemonList) {
+    const newPokemonList = myPokemonList.filter(({ nick }) => nick !== pokemon.nick)
+    localStorage.setItem(MY_POKEMON, JSON.stringify(newPokemonList))
+
+    return newPokemonList
+  }
+
+  return []
 }

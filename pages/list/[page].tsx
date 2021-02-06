@@ -51,7 +51,6 @@ type Props = {
 const PokemonList = (props: Props) => {
   const { page } = props
   const variables = generateVariables(page)
-  console.log(variables);
   const { loading, error, data } = useQuery<GetPokemon>(GET_POKEMONS, {
     variables
   });
