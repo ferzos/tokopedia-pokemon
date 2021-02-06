@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { NextPageContext } from 'next';
-import { Card, Grid, Icon, Label, Pagination, PaginationProps } from 'semantic-ui-react';
+import { Card, Grid, Icon, Label, List, Pagination, PaginationProps } from 'semantic-ui-react';
 import Image from 'next/image'
 import { useRouter } from "next/router";
 import { css } from '@emotion/react';
@@ -68,14 +68,21 @@ const PokemonList = (props: Props) => {
   if (error || data?.pokemons.results.length === 0) return <ErrorState />
 
   if (data && data.pokemons) {
-    const { totalOwn, totalOwnPageRelative } = getNumOfPokemonOwned(data.pokemons.results)
+    const { totalOwn, totalOwnUnique, totalOwnPageRelative } = getNumOfPokemonOwned(data.pokemons.results)
     return (
       <Template>
         <Grid>
           <Grid.Row columns={1}>
             <Grid.Column>
-              <Label basic color='black'>{`You owned: ${totalOwn} pokemon in total`}</Label>
-              <Label basic color='black'>{`You owned: ${totalOwnPageRelative} pokemon in this page`}</Label>
+              <Label color='red'>
+                {`You owned: `}
+                <br/>
+                <List bulleted>
+                  <List.Item>{`${totalOwn} pokemon in total`}</List.Item>
+                  <List.Item>{`${totalOwnUnique} unique pokemon`}</List.Item>
+                  <List.Item>{`${totalOwnPageRelative} pokemon in this page`}</List.Item>
+                </List>
+              </Label>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={3}>

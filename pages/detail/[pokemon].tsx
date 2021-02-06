@@ -77,7 +77,7 @@ const PokemonDetail = (props: Props) => {
         <Grid>
           <Grid.Row columns={1}>
             <Grid.Column>
-              <Card>
+              <Card fluid>
                 <Image src={front_default} alt={pokemon} width={500} height={500} />
                 <Card.Content>
                   <Card.Header>{toTitleCase(name)}</Card.Header>

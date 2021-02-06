@@ -16,13 +16,15 @@ export const getNumOfPokemonOwned = (results: GetPokemon['pokemons']['results'])
   if (myPokemonList) {
     const uniqueOwnedPokemon = uniqBy(myPokemonList, 'name')
     return {
-      totalOwn: uniqueOwnedPokemon.length,
+      totalOwn: myPokemonList.length,
+      totalOwnUnique:uniqueOwnedPokemon.length,
       totalOwnPageRelative: intersectionWith(results, uniqueOwnedPokemon, ({ name: nameA }, { name: nameB }) => nameA.toLowerCase() === nameB.toLowerCase()).length
     }
   }
 
   return {
     totalOwn: 0,
+    totalOwnUnique: 0,
     totalOwnPageRelative: 0
   }
 }
