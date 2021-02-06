@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Input, InputOnChangeData, Label, Modal } from "semantic-ui-react";
 import Image from 'next/image'
 
-import { MY_POKEMON } from "../constants";
+import { setMyPokemonList } from "../utils/storage";
 
 type SuccessCatchModalProps = {
   pokemon: {
@@ -11,12 +11,6 @@ type SuccessCatchModalProps = {
     image: string
   }
   setOpen: Dispatch<SetStateAction<boolean>>
-}
-
-type MyPokemon = {
-  name: string,
-  nick: string,
-  image: string
 }
 
 type ErrorType = 'EMPTY' | 'SAME_NAME'
@@ -35,23 +29,12 @@ const SuccessCatchModal = (props: SuccessCatchModalProps) => {
     if (input.trim() === '') {
       setIsError('EMPTY') 
     } else {
-      const myPokemons = localStorage.getItem(MY_POKEMON)
-  
-      if (myPokemons) {
-        const myPokemonList: MyPokemon[] = JSON.parse(myPokemons)
-        const pokemonWithSameName = myPokemonList.find(({ nick }: MyPokemon) => nick === input)
-  
-        if (pokemonWithSameName) {
-          setIsError('SAME_NAME')
-        } else {
-          localStorage.setItem(MY_POKEMON, JSON.stringify([...myPokemonList, { name, image, nick: input }]))
-          setIsError(undefined)
-          setOpen(false)
-        }
-      } else {
-        localStorage.setItem(MY_POKEMON, JSON.stringify([{ name, image, nick: input }]))
+      const isSuccess = setMyPokemonList({ name, image, nick: input })
+      if (isSuccess) {
         setIsError(undefined)
         setOpen(false)
+      } else {
+        setIsError('SAME_NAME')
       }
     }
   }
