@@ -27,7 +27,7 @@ export const addToPokemonList = (pokemon: MyPokemon): boolean => {
     return true
   }
 
-  localStorage.setItem(MY_POKEMON, JSON.stringify([{ pokemon }]))
+  localStorage.setItem(MY_POKEMON, JSON.stringify([pokemon]))
 
   return true
 }
