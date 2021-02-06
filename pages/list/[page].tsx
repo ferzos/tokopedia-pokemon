@@ -94,15 +94,17 @@ const PokemonList = (props: Props) => {
                     query: { pokemon: name },
                   }}
                 >
-                  <Card fluid>
-                    <Card.Header textAlign={'right'}>
-                      <Icon name='star' inverted color={isOwned(name) ? 'yellow' : 'black'} />
-                    </Card.Header>
-                    <Image layout='responsive' src={image} alt={name} width={250} height={250} />
-                    <Card.Description>
-                      <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
-                    </Card.Description>
-                  </Card>
+                  <a>
+                    <Card fluid>
+                      <Card.Header textAlign={'right'}>
+                        <Icon name='star' inverted color={isOwned(name) ? 'yellow' : 'black'} />
+                      </Card.Header>
+                      <Image layout='responsive' src={image} alt={name} width={250} height={250} />
+                      <Card.Description>
+                        <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
+                      </Card.Description>
+                    </Card>
+                  </a>
                 </Link>
               </Grid.Column>
             ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextPageContext } from 'next';
 import { gql, useQuery } from '@apollo/client';
-import { Card, Grid, Header, Label } from 'semantic-ui-react';
+import { Card, Grid, Header, Label, LabelProps } from 'semantic-ui-react';
 import Image from 'next/image'
 import { css } from '@emotion/react';
 
@@ -52,6 +52,47 @@ type Props = {
   pokemon: string
 }
 
+type Type = 
+  'normal' |
+  'fire' |
+  'fighting' |
+  'water' |
+  'flying' |
+  'grass' |
+  'poison' |
+  'electric' |
+  'ground'|
+  'psychic' |
+  'rock' |
+  'ice' |
+  'bug' |
+  'dragon' |
+  'ghost'|
+  'dark' |
+  'steel' |
+  'fairy'
+
+const TYPE_TO_COLOR: Record<Type, LabelProps['color']> = {
+  bug: 'olive',
+  dark: 'black',
+  dragon: 'violet',
+  electric: 'yellow',
+  fairy: 'pink',
+  fighting: 'red',
+  fire: 'orange',
+  flying: 'teal',
+  ghost: 'violet',
+  grass: 'green',
+  ground: 'brown',
+  ice: 'teal',
+  normal: 'grey',
+  poison: 'purple',
+  psychic: 'pink',
+  rock: 'brown',
+  steel: 'grey',
+  water: 'blue'
+}
+
 const PokemonDetail = (props: Props) => {
   const { pokemon } = props
   const { loading, error, data } = useQuery<GetPokemonDetail>(GET_POKEMON_DETAIL, {
@@ -83,7 +124,7 @@ const PokemonDetail = (props: Props) => {
                   <Card.Header>{toTitleCase(name)}</Card.Header>
                   {types &&
                     <Card.Meta>
-                      {types.map(({ type: { name } }) => <Label>{toTitleCase(name)}</Label>)}
+                      {types.map(({ type: { name } }) => <Label color={TYPE_TO_COLOR[name as Type]} >{toTitleCase(name)}</Label>)}
                     </Card.Meta>
                   }
                   <br />
