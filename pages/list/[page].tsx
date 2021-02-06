@@ -98,7 +98,7 @@ const PokemonList = (props: Props) => {
                     <Card.Header textAlign={'right'}>
                       <Icon name='star' inverted color={isOwned(name) ? 'yellow' : 'black'} />
                     </Card.Header>
-                    <Image src={image} alt={name} width={250} height={250} />
+                    <Image layout='responsive' src={image} alt={name} width={250} height={250} />
                     <Card.Description>
                       <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
                     </Card.Description>

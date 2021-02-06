@@ -32,7 +32,7 @@ const MyPokemonPage = () => {
                   <Card.Header textAlign='right'>
                     <ReleaseModal onRelease={handleRelease(myPokemon)} />
                   </Card.Header>
-                  <Image src={myPokemon.image} alt={myPokemon.name} width={250} height={250} />
+                  <Image layout='responsive' src={myPokemon.image} alt={myPokemon.name} width={250} height={250} />
                   <Card.Description>
                     <Label basic size='tiny' css={styles.label} color='black'>{`${toTitleCase(myPokemon.name)}\n(${myPokemon.nick})`}</Label>
                   </Card.Description>
