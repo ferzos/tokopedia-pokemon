@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 import { toTitleCase } from '../../utils/string';
 import { ErrorState, Loader } from '../../components';
+import Template from '../template';
 
 const GET_POKEMONS = gql`
   query pokemons($limit: Int, $offset: Int) {
@@ -69,38 +70,40 @@ const PokemonList = (props: Props) => {
 
   if (data && data.pokemons) {
     return (
-      <Grid>
-        <Grid.Row columns={3}>
-          {data.pokemons.results.map(({ image, name }) => (
-            <Grid.Column css={styles.column}>
-              <Link
-                href={{
-                  pathname: '/detail/[pokemon]',
-                  query: { pokemon: name },
-                }}
-              >
-                <Card fluid>
-                  <Image src={image} alt={name} width={250} height={250} />
-                  <Card.Description>
-                    <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
-                  </Card.Description>
-                </Card>
-              </Link>
-            </Grid.Column>
-          ))}
-        </Grid.Row>
-        <Grid.Row columns={1}>
-          <Pagination
-            activePage={page}
-            totalPages={Math.floor(data.pokemons.count / 20) - 1}
-            prevItem={null}
-            nextItem={null}
-            size='mini'
-            onPageChange={handlePageChange}
-            css={styles.pagination}
-          />
-        </Grid.Row>
-      </Grid>
+      <Template>
+        <Grid>
+          <Grid.Row columns={3}>
+            {data.pokemons.results.map(({ image, name }) => (
+              <Grid.Column css={styles.column}>
+                <Link
+                  href={{
+                    pathname: '/detail/[pokemon]',
+                    query: { pokemon: name },
+                  }}
+                >
+                  <Card fluid>
+                    <Image src={image} alt={name} width={250} height={250} />
+                    <Card.Description>
+                      <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
+                    </Card.Description>
+                  </Card>
+                </Link>
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+          <Grid.Row columns={1}>
+            <Pagination
+              activePage={page}
+              totalPages={Math.floor(data.pokemons.count / 20) - 1}
+              prevItem={null}
+              nextItem={null}
+              size='mini'
+              onPageChange={handlePageChange}
+              css={styles.pagination}
+            />
+          </Grid.Row>
+        </Grid>
+      </Template>
     )
   }
 
@@ -112,7 +115,7 @@ const styles = {
     margin-bottom: 16px !important;
   `,
   pagination: css`
-    margin: 0 auto !important;
+    margin: 0px auto 48px auto !important;
   `,
   label: css`
     width: 100%;

@@ -22,7 +22,6 @@ const globalStyles = (
           margin: 0
         }
         margin: 0;
-        padding: 8px 16px;
       }
     `}
   />

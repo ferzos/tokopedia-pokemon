@@ -7,6 +7,7 @@ import { css } from '@emotion/react';
 
 import { CatchModal, ErrorState, Loader } from '../../components';
 import { toTitleCase } from '../../utils/string';
+import Template from '../template';
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
@@ -72,37 +73,39 @@ const PokemonDetail = (props: Props) => {
     } = data.pokemon
 
     return (
-      <Grid>
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <Card>
-              <Image src={front_default} alt={pokemon} width={500} height={500} />
-              <Card.Content>
-                <Card.Header>{toTitleCase(name)}</Card.Header>
-                {types &&
-                  <Card.Meta>
-                    {types.map(({ type: { name } }) => <Label>{toTitleCase(name)}</Label>)}
-                  </Card.Meta>
-                }
-                <br />
-                <Card.Description>
-                  <Header as='h4'>
-                    {'Available Moves'}
-                  </Header>
-                  {moves &&
-                    <div css={styles.horizontalScroll}>
-                      {moves.map(({ move: { name } }) => name).sort().map((moveName) => <Label>{toTitleCase(moveName)}</Label>)}
-                    </div>
+      <Template>
+        <Grid>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Card>
+                <Image src={front_default} alt={pokemon} width={500} height={500} />
+                <Card.Content>
+                  <Card.Header>{toTitleCase(name)}</Card.Header>
+                  {types &&
+                    <Card.Meta>
+                      {types.map(({ type: { name } }) => <Label>{toTitleCase(name)}</Label>)}
+                    </Card.Meta>
                   }
-                </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <CatchModal pokemon={{ image: front_default, name: toTitleCase(name) }} />
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+                  <br />
+                  <Card.Description>
+                    <Header as='h4'>
+                      {'Available Moves'}
+                    </Header>
+                    {moves &&
+                      <div css={styles.horizontalScroll}>
+                        {moves.map(({ move: { name } }) => name).sort().map((moveName) => <Label>{toTitleCase(moveName)}</Label>)}
+                      </div>
+                    }
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <CatchModal pokemon={{ image: front_default, name: toTitleCase(name) }} />
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Template>
     );
   }
 
