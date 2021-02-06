@@ -5,7 +5,7 @@ import { Card, Grid, Header, Label } from 'semantic-ui-react';
 import Image from 'next/image'
 import { css } from '@emotion/react';
 
-import { ErrorState, Loader } from '../../components';
+import { CatchModal, ErrorState, Loader } from '../../components';
 import { toTitleCase } from '../../utils/string';
 
 const GET_POKEMON_DETAIL = gql`
@@ -59,11 +59,13 @@ const PokemonDetail = (props: Props) => {
 
   if (loading) return <Loader text={`Fetching Pokedex data from Prof. Oak's lab`} />
 
-  if (error || !data?.pokemon.name) return <ErrorState />
+  if (error || !data?.pokemon.name || !data.pokemon.sprites?.front_default) return <ErrorState />
 
-  if (data?.pokemon.name) {
+  if (data?.pokemon.name && data.pokemon.sprites?.front_default) {
     const {
-      sprites,
+      sprites: {
+        front_default
+      },
       name,
       types,
       moves
@@ -74,7 +76,7 @@ const PokemonDetail = (props: Props) => {
         <Grid.Row columns={1}>
           <Grid.Column>
             <Card>
-              {sprites?.front_default && <Image src={sprites.front_default} alt={pokemon} width={500} height={500} />}
+              <Image src={front_default} alt={pokemon} width={500} height={500} />
               <Card.Content>
                 <Card.Header>{toTitleCase(name)}</Card.Header>
                 {types &&
@@ -95,10 +97,7 @@ const PokemonDetail = (props: Props) => {
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <div css={styles.extraInfo}>
-                  {'Catch!'}
-                  <Image src={'https://lh3.googleusercontent.com/proxy/1TRDSQ1hld7KA_X2Lq3_N8lv9XFt-mTX0KNa_wBs17AS4FuzTg09eT7-9AdLN4ofz6D_0nCDUToz_eQ7pL03dlD4pEAkDNLii-d82zrpGVCtgcGe6uRWz9GNmo6MQVzrCQ'} alt={'pokeball'} width={24} height={24} />
-                </div>
+                <CatchModal pokemon={{ image: front_default, name: toTitleCase(name) }} />
               </Card.Content>
             </Card>
           </Grid.Column>
@@ -116,11 +115,6 @@ const styles = {
     flex-direction: row;
     overflow-x: auto;
   `,
-  extraInfo: css`
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse
-  `
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
