@@ -7,9 +7,11 @@ export type MyPokemon = {
 }
 
 export const getMyPokemonList = (): MyPokemon[] | null => {
-  const myPokemonList = localStorage.getItem(MY_POKEMON)
-
-  if (myPokemonList) return JSON.parse(myPokemonList) as MyPokemon[]
+  if (typeof window !== 'undefined') {
+    const myPokemonList = localStorage.getItem(MY_POKEMON)
+  
+    if (myPokemonList) return JSON.parse(myPokemonList) as MyPokemon[]
+  }
 
   return null
 }
