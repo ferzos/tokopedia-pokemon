@@ -1,13 +1,13 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { NextPageContext } from 'next';
-import { Card, Grid, Label, Pagination, PaginationProps } from 'semantic-ui-react';
+import { Card, Grid, Icon, Label, Pagination, PaginationProps } from 'semantic-ui-react';
 import Image from 'next/image'
 import { useRouter } from "next/router";
 import { css } from '@emotion/react';
 import Link from 'next/link'
 
-import { toTitleCase } from '../../utils/string';
+import { getNumOfPokemonOwned, isOwned, toTitleCase } from '../../utils/string';
 import { ErrorState, Loader } from '../../components';
 import Template from '../template';
 
@@ -27,7 +27,7 @@ const GET_POKEMONS = gql`
   }
 `;
 
-type GetPokemon = {
+export type GetPokemon = {
   pokemons: {
     results: {
       name: string,
@@ -68,12 +68,19 @@ const PokemonList = (props: Props) => {
   if (error || data?.pokemons.results.length === 0) return <ErrorState />
 
   if (data && data.pokemons) {
+    const { totalOwn, totalOwnPageRelative } = getNumOfPokemonOwned(data.pokemons.results)
     return (
       <Template>
         <Grid>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Label basic color='black'>{`You owned: ${totalOwn} pokemon in total`}</Label>
+              <Label basic color='black'>{`You owned: ${totalOwnPageRelative} pokemon in this page`}</Label>
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row columns={3}>
             {data.pokemons.results.map(({ image, name }) => (
-              <Grid.Column css={styles.column}>
+              <Grid.Column css={styles.column} >
                 <Link
                   href={{
                     pathname: '/detail/[pokemon]',
@@ -81,6 +88,9 @@ const PokemonList = (props: Props) => {
                   }}
                 >
                   <Card fluid>
+                    <Card.Header textAlign={'right'}>
+                      <Icon name='star' inverted color={isOwned(name) ? 'yellow' : 'black'} />
+                    </Card.Header>
                     <Image src={image} alt={name} width={250} height={250} />
                     <Card.Description>
                       <Label basic size='tiny' css={styles.label} color='black'>{toTitleCase(name)}</Label>
