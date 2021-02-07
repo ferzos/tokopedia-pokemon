@@ -1,22 +1,20 @@
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { css } from "@emotion/react";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Input, InputOnChangeData, Label, Modal } from "semantic-ui-react";
 import Image from 'next/image'
 
 import { addToPokemonList } from "../utils/storage";
+import { PokemonDetailContext } from "../hooks/context";
 
 type SuccessCatchModalProps = {
-  pokemon: {
-    name: string,
-    image: string
-  }
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
 type ErrorType = 'EMPTY' | 'SAME_NAME'
 
 const SuccessCatchModal = (props: SuccessCatchModalProps) => {
-  const { pokemon: { name, image }, setOpen } = props
+  const { setOpen } = props
+  const { image, name } = useContext(PokemonDetailContext)
   const [isError, setIsError] = useState<ErrorType>();
   const [input, setInput] = useState<string>('');
 
@@ -57,15 +55,7 @@ const SuccessCatchModal = (props: SuccessCatchModalProps) => {
   )
 }
 
-type Props = {
-  pokemon: {
-    name: string,
-    image: string
-  }
-}
-
-const CatchModal = (props: Props) => {
-  const { pokemon } = props
+const CatchModal = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [isCatched, setIsCatched] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -103,7 +93,7 @@ const CatchModal = (props: Props) => {
         </div>
       }
     >
-      {isCatched ? <SuccessCatchModal pokemon={pokemon} setOpen={setOpen} /> : (
+      {isCatched ? <SuccessCatchModal setOpen={setOpen} /> : (
         <>
           <Modal.Content>
             <Label size='big'>{`Oh no... the pokemon has run away.`}</Label>

@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import { CatchModal, ErrorState, Loader } from '../../components';
 import { toTitleCase } from '../../utils/string';
 import Template from '../../components/Template';
+import { PokemonDetailContext } from '../../hooks/context';
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
@@ -48,11 +49,7 @@ type GetPokemonDetail = {
   }
 }
 
-type Props = {
-  pokemon: string
-}
-
-type Type = 
+type Type =
   'normal' |
   'fire' |
   'fighting' |
@@ -61,13 +58,13 @@ type Type =
   'grass' |
   'poison' |
   'electric' |
-  'ground'|
+  'ground' |
   'psychic' |
   'rock' |
   'ice' |
   'bug' |
   'dragon' |
-  'ghost'|
+  'ghost' |
   'dark' |
   'steel' |
   'fairy'
@@ -93,6 +90,10 @@ const TYPE_TO_COLOR: Record<Type, LabelProps['color']> = {
   water: 'blue'
 }
 
+type Props = {
+  pokemon: string
+}
+
 const PokemonDetail = (props: Props) => {
   const { pokemon } = props
   const { loading, error, data } = useQuery<GetPokemonDetail>(GET_POKEMON_DETAIL, {
@@ -112,39 +113,41 @@ const PokemonDetail = (props: Props) => {
     } = data.pokemon
 
     return (
-      <Template>
-        <Grid>
-          <Grid.Row columns={1}>
-            <Grid.Column>
-              <Card fluid>
-                <Image layout='responsive' src={sprites?.front_default || '/pokeball.png'} alt={pokemon} width={500} height={500} />
-                <Card.Content>
-                  <Card.Header>{toTitleCase(name)}</Card.Header>
-                  {types &&
-                    <Card.Meta>
-                      {types.map(({ type: { name } }) => <Label color={TYPE_TO_COLOR[name as Type]} >{toTitleCase(name)}</Label>)}
-                    </Card.Meta>
-                  }
-                  <br />
-                  <Card.Description>
-                    <Header as='h4'>
-                      {'Available Moves'}
-                    </Header>
-                    {moves &&
-                      <div css={styles.horizontalScroll}>
-                        {moves.map(({ move: { name } }) => name).sort().map((moveName) => <Label>{toTitleCase(moveName)}</Label>)}
-                      </div>
+      <PokemonDetailContext.Provider value={{ image: sprites?.front_default || '/pokeball.png', name: toTitleCase(name) }}>
+        <Template>
+          <Grid>
+            <Grid.Row columns={1}>
+              <Grid.Column>
+                <Card fluid>
+                  <Image layout='responsive' src={sprites?.front_default || '/pokeball.png'} alt={pokemon} width={500} height={500} />
+                  <Card.Content>
+                    <Card.Header>{toTitleCase(name)}</Card.Header>
+                    {types &&
+                      <Card.Meta>
+                        {types.map(({ type: { name } }) => <Label color={TYPE_TO_COLOR[name as Type]} >{toTitleCase(name)}</Label>)}
+                      </Card.Meta>
                     }
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <CatchModal pokemon={{ image: sprites?.front_default || '/pokeball.png', name: toTitleCase(name) }} />
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Template>
+                    <br />
+                    <Card.Description>
+                      <Header as='h4'>
+                        {'Available Moves'}
+                      </Header>
+                      {moves &&
+                        <div css={styles.horizontalScroll}>
+                          {moves.map(({ move: { name } }) => name).sort().map((moveName) => <Label>{toTitleCase(moveName)}</Label>)}
+                        </div>
+                      }
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <CatchModal />
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Template>
+      </PokemonDetailContext.Provider>
     );
   }
 
