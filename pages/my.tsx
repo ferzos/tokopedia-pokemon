@@ -6,7 +6,7 @@ import { css } from '@emotion/react';
 import { ErrorState, ReleaseModal } from '../components';
 import { getMyPokemonList, MyPokemon, removeFromPokemonList } from '../utils/storage';
 import { toTitleCase } from '../utils/string';
-import Template from './template';
+import Template from '../template';
 
 const MyPokemonPage = () => {
   const [myPokemonList, setMyPokemonList] = useState<MyPokemon[] | null>();

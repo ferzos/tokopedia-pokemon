@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 import { getNumOfPokemonOwned, isOwned, toTitleCase } from '../../utils/string';
 import { ErrorState, Loader } from '../../components';
-import Template from '../template';
+import Template from '../../template';
 
 const GET_POKEMONS = gql`
   query pokemons($limit: Int, $offset: Int) {
