@@ -35,6 +35,9 @@ function App({ Component, pageProps }) {
         <title>Pokemon Tokopedia</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Lato,Helvetica Neue,Arial,Helvetica,sans-serif&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://graphql-pokeapi.vercel.app" />
       </Head>
       {globalStyles}
       <Component {...pageProps} />
