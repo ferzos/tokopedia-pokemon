@@ -5,9 +5,13 @@ import { GetPokemon } from './../pages/list/[page]';
 import { getMyPokemonList } from "./storage"
 
 export const toTitleCase = (text: string) => {
-  const [firstChar, ...rest] = text
+  if (text) {
+    const [firstChar, ...rest] = text
+  
+    return [firstChar.toUpperCase(), ...rest].join('')
+  }
 
-  return [firstChar.toUpperCase(), ...rest].join('')
+  return ''
 }
 
 export const getNumOfPokemonOwned = (results: GetPokemon['pokemons']['results']) => {
@@ -33,8 +37,8 @@ export const isOwned = (pokemonName: string) => {
   const myPokemonList = getMyPokemonList()
 
   if (myPokemonList) {
-    return myPokemonList.find(({ name }) => name.toLowerCase() === pokemonName.toLowerCase())
+    return !!myPokemonList.find(({ name }) => name.toLowerCase() === pokemonName.toLowerCase())
   }
 
-  return 0
+  return false
 }
