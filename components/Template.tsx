@@ -1,6 +1,6 @@
+import React, { PropsWithChildren } from 'react';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
-import React, { PropsWithChildren } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 
 const Template = (props: PropsWithChildren<{}>) => {

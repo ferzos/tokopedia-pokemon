@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Icon, Label, IconProps } from 'semantic-ui-react';
 import { css } from '@emotion/react';
-import Template from '../template';
+import Template from './Template';
 
 type Props = {
   text?: string

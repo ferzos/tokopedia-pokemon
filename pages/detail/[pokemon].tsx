@@ -7,7 +7,7 @@ import { css } from '@emotion/react';
 
 import { CatchModal, ErrorState, Loader } from '../../components';
 import { toTitleCase } from '../../utils/string';
-import Template from '../../template';
+import Template from '../../components/Template';
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
